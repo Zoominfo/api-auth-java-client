@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zoominfo</groupId>
-    <artifactId>java-api-client</artifactId>
+    <artifactId>api-auth-java-client</artifactId>
     <version>1.0</version>
 
-    <name>Zoominfo API Java</name>
-    <description>Zoominfo API Java</description>
-    <url>https://github.com/NeverBounce/NeverBounceApi-Java</url>
+    <name>Zoominfo API Auth Java Client</name>
+    <description>Zoominfo API Auth Java Client</description>
+    <url>https://github.com/Zoominfo/api-auth-java-client</url>
 
     <organization>
-        <name>Metrics Delivered LLC.</name>
+        <name>Zoominfo</name>
         <url>https://zoominfo.com/</url>
     </organization>
 
@@ -68,8 +68,6 @@
             <version>5.2.5.RELEASE</version>
         </dependency>
 
-
     </dependencies>
-
-
+    
 </project>

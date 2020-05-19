@@ -30,18 +30,10 @@ public class AuthClient {
     private String password;
     private String clientId;
     private String privateKey;
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     private AuthClient() {
         this.restTemplate = new RestTemplate();
-    }
-
-    public static void main(String[] args) {
-        AuthClient authClient = new AuthClient("username", "clientId", "privateKey");
-        String accessToken = authClient.getAccessToken();
-
-        AuthClient authClient1 = new AuthClient("username", "password");
-        String accessToken = authClient.getAccessToken();
     }
 
     AuthClient(String username,
