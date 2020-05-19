@@ -1,4 +1,4 @@
-# zoominfo-api-pki-auth-client
+# Zoominfo API Auth Java Client
 
 #### Auth flow using client id and private key
 ```
