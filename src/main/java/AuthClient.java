@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import providers.AuthClientRSAKeyProvider;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -36,7 +37,7 @@ public class AuthClient {
         this.restTemplate = new RestTemplate();
     }
 
-    AuthClient(String username,
+    public AuthClient(String username,
                String password) {
         this();
         usernameAndPassword = true;
@@ -44,10 +45,9 @@ public class AuthClient {
         this.password = password;
     }
 
-    AuthClient( String username,
+    public AuthClient( String username,
                 String clientId,
-                String privateKey
-    ) {
+                String privateKey) {
         this();
         this.usernameAndPassword = false;
         this.username = username;
@@ -139,25 +139,6 @@ public class AuthClient {
                 .generatePrivate(privateKeySpec);
         RSAKeyProvider keyProvider = new AuthClientRSAKeyProvider(rsaPrivateKey);
         return Algorithm.RSA256(keyProvider);
-    }
-
-    static class AuthClientRSAKeyProvider implements RSAKeyProvider {
-        private final RSAPrivateKey privateKey;
-        private AuthClientRSAKeyProvider(RSAPrivateKey privateKey) {
-            this.privateKey = privateKey;
-        }
-        @Override
-        public RSAPublicKey getPublicKeyById(String keyId) {
-            return null;
-        }
-        @Override
-        public RSAPrivateKey getPrivateKey() {
-            return this.privateKey;
-        }
-        @Override
-        public String getPrivateKeyId() {
-            return null;
-        }
     }
 
 }
