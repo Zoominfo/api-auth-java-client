@@ -1,3 +1,5 @@
+package com.zoominfo.api.auth;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.RSAKeyProvider;
@@ -5,7 +7,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import providers.AuthClientRSAKeyProvider;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -132,13 +133,36 @@ public class AuthClient {
     private Algorithm generateSigningAlgorithm(String privateKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String cleanedPrivateKey = privateKey.replaceAll("-----END PRIVATE KEY-----", "")
                 .replaceAll("-----BEGIN PRIVATE KEY-----", "")
-                .replaceAll("\n", "");
+                .replaceAll("\n", "").trim();
         byte[] privateKeyBytes = Base64.getDecoder().decode(cleanedPrivateKey);
         PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
         RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) KeyFactory.getInstance("RSA")
                 .generatePrivate(privateKeySpec);
         RSAKeyProvider keyProvider = new AuthClientRSAKeyProvider(rsaPrivateKey);
         return Algorithm.RSA256(keyProvider);
+    }
+
+    private static class AuthClientRSAKeyProvider implements RSAKeyProvider {
+        private final RSAPrivateKey privateKey;
+
+        public AuthClientRSAKeyProvider(RSAPrivateKey privateKey) {
+            this.privateKey = privateKey;
+        }
+
+        @Override
+        public RSAPublicKey getPublicKeyById(String keyId) {
+            return null;
+        }
+
+        @Override
+        public RSAPrivateKey getPrivateKey() {
+            return this.privateKey;
+        }
+
+        @Override
+        public String getPrivateKeyId() {
+            return null;
+        }
     }
 
 }
